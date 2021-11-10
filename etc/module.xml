@@ -5,10 +5,13 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-  <module name="Netresearch_InteractiveBatchProcessing">
-    <sequence>
-      <module name="Magento_Ui"/>
-      <module name="Netresearch_ShippingCore"/>
-    </sequence>
-  </module>
+    <module name="Netresearch_InteractiveBatchProcessing">
+        <sequence>
+            <module name="Magento_Backend"/>
+            <module name="Magento_Framework"/>
+            <module name="Magento_Sales"/>
+            <module name="Magento_Ui"/>
+            <module name="Netresearch_ShippingCore"/>
+        </sequence>
+    </module>
 </config>
