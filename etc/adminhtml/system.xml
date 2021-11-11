@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * See LICENSE.md for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="shipping">
+            <group id="batch_processing">
+                <group id="shipping_label">
+                    <field id="interactive_massaction_enabled" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="5"
+                           translate="label button_label comment" type="Netresearch\ConfigFields\Model\Type\Checkbox">
+                        <label>Enable Interactive Mass Action</label>
+                        <button_label>Edit essential shipping settings before batch processing selected orders.</button_label>
+                        <comment>If you want to select packaging or shipping product per order, then it is recommended to enable interactive mass action and to disable fully automated cron processing.</comment>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>
