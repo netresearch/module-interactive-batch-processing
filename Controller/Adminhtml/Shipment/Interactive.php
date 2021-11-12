@@ -16,6 +16,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Netresearch\InteractiveBatchProcessing\Model\OrderProvider;
+use Netresearch\ShippingCore\Api\BulkShipment\OrderLoaderInterface;
 
 /**
  * @method Http getRequest()
@@ -37,15 +38,22 @@ class Interactive extends Action implements HttpPostActionInterface
      */
     private $orderProvider;
 
+    /**
+     * @var OrderLoaderInterface
+     */
+    private $orderLoader;
+
     public function __construct(
         Context $context,
         CollectionFactory $collectionFactory,
         Filter $filter,
-        OrderProvider $orderProvider
+        OrderProvider $orderProvider,
+        OrderLoaderInterface $orderLoader
     ) {
         $this->collectionFactory = $collectionFactory;
         $this->filter = $filter;
         $this->orderProvider = $orderProvider;
+        $this->orderLoader = $orderLoader;
 
         parent::__construct($context);
     }
@@ -59,15 +67,21 @@ class Interactive extends Action implements HttpPostActionInterface
         $this->_setActiveMenu('Magento_Sales::sales_order');
         $this->_view->getPage()->getConfig()->getTitle()->prepend(__('Bulk Shipment'));
 
-        // todo(nr): filter applicable orders (label status, carrier code)
-        // @see \Netresearch\ShippingCore\Model\BulkShipment\BulkShipmentManagement::createShipments
         $orderCollection = $this->filter->getCollection($this->collectionFactory->create());
+        $orders = $this->orderLoader->load($orderCollection->getAllIds());
 
         // the "Create New Order" UI button gets added by using the UI filter above…
         $this->_view->getLayout()->unsetElement('container-sales_order_grid-add');
 
-        // todo(nr): if order collection is empty, redirect to grid.
-        $this->orderProvider->setOrders($orderCollection->getItems());
+        if (empty($orders)) {
+            $this->messageManager->addNoticeMessage(__('Selected orders cannot be processed.'));
+            $resultRedirect = $this->resultRedirectFactory->create();
+            $resultRedirect->setPath('sales/order');
+
+            return $resultRedirect;
+        }
+
+        $this->orderProvider->setOrders($orders);
 
         return $this->_view->getPage();
     }
