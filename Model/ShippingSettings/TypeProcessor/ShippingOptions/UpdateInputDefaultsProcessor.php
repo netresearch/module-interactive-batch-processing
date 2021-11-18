@@ -9,21 +9,22 @@ declare(strict_types=1);
 namespace Netresearch\InteractiveBatchProcessing\Model\ShippingSettings\TypeProcessor\ShippingOptions;
 
 use Magento\Sales\Api\Data\ShipmentInterface;
-use Netresearch\InteractiveBatchProcessing\Model\InputValuesProvider;
+use Netresearch\InteractiveBatchProcessing\Model\Registry\SelectedShippingSettings;
 use Netresearch\ShippingCore\Api\Data\ShippingSettings\ShippingOption\InputInterface;
+use Netresearch\ShippingCore\Api\Data\ShippingSettings\ShippingOption\OptionInterface;
 use Netresearch\ShippingCore\Api\Data\ShippingSettings\ShippingOptionInterface;
 use Netresearch\ShippingCore\Api\ShippingSettings\TypeProcessor\ShippingOptionsProcessorInterface;
 
 class UpdateInputDefaultsProcessor implements ShippingOptionsProcessorInterface
 {
     /**
-     * @var InputValuesProvider
+     * @var SelectedShippingSettings
      */
-    private $shippingProductProvider;
+    private $settings;
 
-    public function __construct(InputValuesProvider $shippingProductProvider)
+    public function __construct(SelectedShippingSettings $settings)
     {
-        $this->shippingProductProvider = $shippingProductProvider;
+        $this->settings = $settings;
     }
 
     private function getOptionInput(ShippingOptionInterface $serviceOption, string $inputCode): ?InputInterface
@@ -63,7 +64,7 @@ class UpdateInputDefaultsProcessor implements ShippingOptionsProcessorInterface
         }
 
         $order = $shipment->getOrder();
-        $inputValues = $this->shippingProductProvider->getInputValues((int) $order->getId());
+        $inputValues = $this->settings->get((int) $order->getId());
         if (empty($inputValues)) {
             // no selection made by user for this particular order, proceed.
             return $shippingOptions;
@@ -83,8 +84,22 @@ class UpdateInputDefaultsProcessor implements ShippingOptionsProcessorInterface
                 continue;
             }
 
-            // todo(nr): check if input value is amongst the input's options (select, radioset)
-            $input->setDefaultValue($inputValue);
+            // check if selected value is available in the input's options.
+            $inputOptions = $input->getOptions();
+            if (empty($inputOptions)) {
+                $allowedValues = [$inputValue];
+            } else {
+                $allowedValues = array_map(
+                    function (OptionInterface $inputOption) {
+                        return $inputOption->getValue();
+                    },
+                    $inputOptions
+                );
+            }
+
+            if (in_array($inputValue, $allowedValues, true)) {
+                $input->setDefaultValue($inputValue);
+            }
         }
 
         return $shippingOptions;

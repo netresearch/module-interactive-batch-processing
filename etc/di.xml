@@ -6,11 +6,24 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- # virtual types -->
+    <virtualType name="Netresearch\InteractiveBatchProcessing\Block\Adminhtml\Form\Data\Form\ConfirmFactory\Virtual" type="Magento\Framework\Data\FormFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">Netresearch\InteractiveBatchProcessing\Block\Adminhtml\Data\Form\Confirm</argument>
+        </arguments>
+    </virtualType>
     <virtualType name="Netresearch\ShippingCore\Model\ShippingSettings\Packaging\ShippingDataProcessor\Virtual">
         <arguments>
             <argument name="shippingOptionsProcessors" xsi:type="array">
                 <item name="nrShippingUpdateShippingDefaultsProcessor" xsi:type="object" sortOrder="2000">Netresearch\InteractiveBatchProcessing\Model\ShippingSettings\TypeProcessor\ShippingOptions\UpdateInputDefaultsProcessor</item>
+                <item name="nrShippingUpdatePackageDimensionsProcessor" xsi:type="object" sortOrder="2010">Netresearch\InteractiveBatchProcessing\Model\ShippingSettings\TypeProcessor\ShippingOptions\UpdatePackageDimensionsProcessor</item>
             </argument>
         </arguments>
     </virtualType>
+
+    <!-- # argument di overrides -->
+    <type name="Netresearch\InteractiveBatchProcessing\Block\Adminhtml\Widget\Form">
+        <arguments>
+            <argument name="formFactory" xsi:type="object">Netresearch\InteractiveBatchProcessing\Block\Adminhtml\Form\Data\Form\ConfirmFactory\Virtual</argument>
+        </arguments>
+    </type>
 </config>

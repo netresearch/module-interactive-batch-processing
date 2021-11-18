@@ -32,7 +32,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-DHLGW-1138": "1.0.0.x-dev"
+            "dev-develop": "1.0.0.x-dev"
         }
     }
 }

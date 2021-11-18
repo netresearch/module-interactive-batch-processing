@@ -6,11 +6,14 @@
 
 declare(strict_types=1);
 
-namespace Netresearch\InteractiveBatchProcessing\Model;
+namespace Netresearch\InteractiveBatchProcessing\Model\Registry;
 
 use Magento\Sales\Api\Data\OrderInterface;
 
-class OrderProvider
+/**
+ * Dedicated registry to hold orders selected in the orders grid for display in the interactive form.
+ */
+class SelectedOrders
 {
     /**
      * @var OrderInterface[]
@@ -20,7 +23,7 @@ class OrderProvider
     /**
      * @return OrderInterface[]
      */
-    public function getOrders(): array
+    public function get(): array
     {
         return $this->orders;
     }
@@ -28,7 +31,7 @@ class OrderProvider
     /**
      * @param OrderInterface[] $orders
      */
-    public function setOrders(array $orders): void
+    public function set(array $orders): void
     {
         $this->orders = $orders;
     }

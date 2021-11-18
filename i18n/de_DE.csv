@@ -1,7 +1,7 @@
-"Bulk Shipment",Massenversand
-"Destination Address",Zieladresse
+"Destination Address",Empfängeradresse
 "Edit essential shipping settings before batch processing selected orders.","Bearbeiten Sie wesentliche Parameter vor dem Ausführen der Massenaktion."
 "Enable Interactive Mass Action","Interaktive Massenaktion aktivieren"
 "If you want to select packaging or shipping product per order, then it is recommended to enable interactive mass action and to disable fully automated cron processing.","Falls Sie beim Versand Paketgröße oder Versandprodukt je Bestellung festlegen wollen, dann wird empfohlen, die interaktive Massenverarbeitung zu aktivieren und das vollautomatische Erzeugen von Versandetiketten via Cron zu deaktivieren."
-"Items to Ship","Zu versendende Artikel"
+"Interactive Mass Action","Interaktive Massenaktion"
+"Order Items","Bestellte Artikel"
 "Selected orders cannot be processed.","Die gewählten Bestellungen können nicht verarbeitet werden."

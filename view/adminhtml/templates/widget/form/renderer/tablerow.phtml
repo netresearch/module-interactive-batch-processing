@@ -1,0 +1,17 @@
+<?php
+/**
+ * Render fieldset as table row for the batch processing form.
+ *
+ * @var $block \Netresearch\InteractiveBatchProcessing\Block\Adminhtml\Widget\Form\Renderer\TableRow
+ * @var $element \Magento\Framework\Data\Form\Element\Fieldset
+ */
+$element = $block->getElement();
+?>
+
+<tr>
+    <?php foreach ($element->getChildren() as $childElement): ?>
+        <td>
+            <?= /* @noEscape */ $childElement->getElementHtml(); ?>
+        </td>
+    <?php endforeach; ?>
+</tr>

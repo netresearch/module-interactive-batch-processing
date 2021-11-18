@@ -15,7 +15,7 @@ use Magento\Framework\App\Request\Http;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Ui\Component\MassAction\Filter;
-use Netresearch\InteractiveBatchProcessing\Model\OrderProvider;
+use Netresearch\InteractiveBatchProcessing\Model\Registry\SelectedOrders;
 use Netresearch\ShippingCore\Api\BulkShipment\OrderLoaderInterface;
 
 /**
@@ -34,9 +34,9 @@ class Interactive extends Action implements HttpPostActionInterface
     private $filter;
 
     /**
-     * @var OrderProvider
+     * @var SelectedOrders
      */
-    private $orderProvider;
+    private $selectedOrders;
 
     /**
      * @var OrderLoaderInterface
@@ -47,12 +47,12 @@ class Interactive extends Action implements HttpPostActionInterface
         Context $context,
         CollectionFactory $collectionFactory,
         Filter $filter,
-        OrderProvider $orderProvider,
+        SelectedOrders $selectedOrders,
         OrderLoaderInterface $orderLoader
     ) {
         $this->collectionFactory = $collectionFactory;
         $this->filter = $filter;
-        $this->orderProvider = $orderProvider;
+        $this->selectedOrders = $selectedOrders;
         $this->orderLoader = $orderLoader;
 
         parent::__construct($context);
@@ -65,7 +65,7 @@ class Interactive extends Action implements HttpPostActionInterface
     {
         $this->_view->loadLayout();
         $this->_setActiveMenu('Magento_Sales::sales_order');
-        $this->_view->getPage()->getConfig()->getTitle()->prepend(__('Bulk Shipment'));
+        $this->_view->getPage()->getConfig()->getTitle()->prepend(__('Interactive Mass Action'));
 
         $orderCollection = $this->filter->getCollection($this->collectionFactory->create());
         $orders = $this->orderLoader->load($orderCollection->getAllIds());
@@ -81,7 +81,7 @@ class Interactive extends Action implements HttpPostActionInterface
             return $resultRedirect;
         }
 
-        $this->orderProvider->setOrders($orders);
+        $this->selectedOrders->set($orders);
 
         return $this->_view->getPage();
     }

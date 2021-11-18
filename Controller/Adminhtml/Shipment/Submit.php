@@ -12,7 +12,7 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\Http;
-use Netresearch\InteractiveBatchProcessing\Model\InputValuesProvider;
+use Netresearch\InteractiveBatchProcessing\Model\Registry\SelectedShippingSettings;
 
 /**
  * @method Http getRequest()
@@ -20,13 +20,13 @@ use Netresearch\InteractiveBatchProcessing\Model\InputValuesProvider;
 class Submit extends Action implements HttpPostActionInterface
 {
     /**
-     * @var InputValuesProvider
+     * @var SelectedShippingSettings
      */
-    private $inputValuesProvider;
+    private $settings;
 
-    public function __construct(Context $context, InputValuesProvider $inputValuesProvider)
+    public function __construct(Context $context, SelectedShippingSettings $settings)
     {
-        $this->inputValuesProvider = $inputValuesProvider;
+        $this->settings = $settings;
 
         parent::__construct($context);
     }
@@ -35,7 +35,7 @@ class Submit extends Action implements HttpPostActionInterface
     {
         $inputValues = $this->getRequest()->getParam('inputs', []);
         foreach ($inputValues as $orderId => $orderInputValues) {
-            $this->inputValuesProvider->setInputValues((int) $orderId, $orderInputValues);
+            $this->settings->set((int) $orderId, $orderInputValues);
         }
 
         $this->_forward(
