@@ -27,7 +27,7 @@ class TableRow extends Template implements RendererInterface
     /**
      * @return AbstractElement
      */
-    public function getElement()
+    public function getElement(): AbstractElement
     {
         return $this->_element;
     }

@@ -9,13 +9,10 @@ declare(strict_types=1);
 namespace Netresearch\InteractiveBatchProcessing\Model\ShippingSettings\TypeProcessor\ShippingOptions;
 
 use Magento\Sales\Api\Data\ShipmentInterface;
-use Netresearch\InteractiveBatchProcessing\Model\Registry\SelectedShippingSettings;
 use Netresearch\ShippingCore\Api\Config\ParcelProcessingConfigInterface;
 use Netresearch\ShippingCore\Api\Data\ShippingSettings\ShippingOption\InputInterface;
-use Netresearch\ShippingCore\Api\Data\ShippingSettings\ShippingOption\OptionInterface;
 use Netresearch\ShippingCore\Api\Data\ShippingSettings\ShippingOptionInterface;
 use Netresearch\ShippingCore\Api\ShippingSettings\TypeProcessor\ShippingOptionsProcessorInterface;
-use Netresearch\ShippingCore\Model\Config\ParcelProcessingConfig;
 use Netresearch\ShippingCore\Model\ShippingBox\Package;
 use Netresearch\ShippingCore\Model\ShippingSettings\ShippingOption\Codes;
 
@@ -49,7 +46,7 @@ class UpdatePackageDimensionsProcessor implements ShippingOptionsProcessorInterf
         ShippingOptionInterface $shippingOption,
         Package $selectedPackage,
         ?Package $defaultPackage
-    ) {
+    ): void {
         $packagingWeightInput = $this->getOptionInput($shippingOption, Codes::PACKAGE_INPUT_PACKAGING_WEIGHT);
         if ($packagingWeightInput instanceof InputInterface) {
             $packagingWeightInput->setDefaultValue((string) $selectedPackage->getWeight());
@@ -85,7 +82,7 @@ class UpdatePackageDimensionsProcessor implements ShippingOptionsProcessorInterf
      * @param ShippingOptionInterface $shippingOption
      * @param ShipmentInterface $shipment
      */
-    private function processInputs(ShippingOptionInterface $shippingOption, ShipmentInterface $shipment)
+    private function processInputs(ShippingOptionInterface $shippingOption, ShipmentInterface $shipment): void
     {
         if ($shippingOption->getCode() !== Codes::PACKAGE_OPTION_DETAILS) {
             return;
