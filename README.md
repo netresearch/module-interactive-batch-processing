@@ -17,7 +17,7 @@ the batch process.
 Requirements
 ------------
 
-* PHP >= 7.1.0
+* PHP >= 7.2
 
 Compatibility
 -------------
