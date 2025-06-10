@@ -120,13 +120,14 @@ class UpdatePackageDimensionsProcessor implements ShippingOptionsProcessorInterf
      *
      * @return ShippingOptionInterface[]
      */
+    #[\Override]
     public function process(
         string $carrierCode,
         array $shippingOptions,
         int $storeId,
         string $countryCode,
         string $postalCode,
-        ShipmentInterface $shipment = null
+        ?ShipmentInterface $shipment = null
     ): array {
         if (!$shipment) {
             // checkout scope, nothing to modify.

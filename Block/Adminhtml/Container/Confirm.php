@@ -20,6 +20,7 @@ class Confirm extends Container
      *
      * @return void
      */
+    #[\Override]
     protected function _construct()
     {
         $this->_controller = 'adminhtml';
@@ -31,6 +32,7 @@ class Confirm extends Container
         $this->removeButton('reset');
     }
 
+    #[\Override]
     public function getBackUrl()
     {
         return $this->getUrl('sales/order/index');

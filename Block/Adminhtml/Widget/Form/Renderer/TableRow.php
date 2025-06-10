@@ -36,6 +36,7 @@ class TableRow extends Template implements RendererInterface
      * @param AbstractElement $element
      * @return string
      */
+    #[\Override]
     public function render(AbstractElement $element)
     {
         $this->_element = $element;

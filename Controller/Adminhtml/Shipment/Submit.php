@@ -31,7 +31,8 @@ class Submit extends Action implements HttpPostActionInterface
         parent::__construct($context);
     }
 
-    public function execute()
+    #[\Override]
+    public function execute(): void
     {
         $inputValues = $this->getRequest()->getParam('inputs', []);
         foreach ($inputValues as $orderId => $orderInputValues) {

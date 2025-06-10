@@ -45,6 +45,7 @@ class Confirm extends Form
      * @return string
      * @throws LocalizedException
      */
+    #[\Override]
     public function toHtml()
     {
         Profiler::start('form/toHtml');
@@ -53,7 +54,7 @@ class Confirm extends Form
         if ($useContainer) {
             $html .= '<form ' . $this->serialize($this->getHtmlAttributes()) . '>';
             $html .= '<div>';
-            if (strtolower($this->getData('method')) === 'post') {
+            if (strtolower((string) $this->getData('method')) === 'post') {
                 $html .= '<input name="form_key" type="hidden" value="' . $this->formKey->getFormKey() . '" />';
             }
             $html .= '</div>';

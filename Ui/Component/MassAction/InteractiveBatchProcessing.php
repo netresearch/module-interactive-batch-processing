@@ -39,6 +39,7 @@ class InteractiveBatchProcessing extends Action
         parent::__construct($context, $components, $data, $actions);
     }
 
+    #[\Override]
     public function prepare()
     {
         parent::prepare();

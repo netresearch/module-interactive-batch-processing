@@ -12,6 +12,7 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Ui\Component\MassAction\Filter;
@@ -61,7 +62,8 @@ class Interactive extends Action implements HttpPostActionInterface
     /**
      * @throws LocalizedException
      */
-    public function execute()
+    #[\Override]
+    public function execute(): ResultInterface
     {
         $this->_view->loadLayout();
         $this->_setActiveMenu('Magento_Sales::sales_order');

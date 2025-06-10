@@ -144,6 +144,7 @@ class Form extends Generic
     /**
      * @throws LocalizedException
      */
+    #[\Override]
     protected function _prepareForm(): self
     {
         $orders = $this->selectedOrders->get();
@@ -168,6 +169,7 @@ class Form extends Generic
     /**
      * @throws LocalizedException
      */
+    #[\Override]
     protected function _prepareLayout(): self
     {
         parent::_prepareLayout();
